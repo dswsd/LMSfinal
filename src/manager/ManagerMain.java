@@ -16,7 +16,7 @@ public class ManagerMain {
                 selNum = sc.nextInt();
             } else if (selNum == 1) {
                 //로그인
-                System.out.println("관리자 로그인ap뉴");
+                System.out.println("관리자 로그인 메뉴");
 
                 System.out.print("아이디 입력>> ");
                 String id = sc.next().toLowerCase();
