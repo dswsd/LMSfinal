@@ -1,0 +1,16 @@
+C:\Program Files\MariaDB 10.11\data\my.ini 파일을 메모장으로 연 뒤
+autocommit=0 값을  autocommit=1로 변경 후 저장
+작업관리자 -> 서비스 클릭 -> Maria DB 선택 후 마우스 우버튼 -> 다시 시작(R)
+
+위의 작업 처리 후 아래 테이블 생성할 것
+
+CREATE TABLE pay (
+  memId VARCHAR(12) PRIMARY KEY,
+  orderId VARCHAR(12),
+  price INT
+);
+
+CREATE TABLE orderList (
+  orderId VARCHAR(12) PRIMARY KEY,
+  productName VARCHAR(20)
+);
