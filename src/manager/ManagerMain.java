@@ -1,7 +1,5 @@
 package manager;
 
-import dbc6.User;
-
 import java.util.Scanner;
 
 public class ManagerMain {
@@ -16,27 +14,37 @@ public class ManagerMain {
                 selNum = sc.nextInt();
             } else if (selNum == 1) {
                 //로그인
-                System.out.println("관리자 로그인 메뉴");
+                int sel;
+                System.out.println("관리자 메뉴 시작");
 
-                System.out.print("아이디 입력>> ");
-                String id = sc.next().toLowerCase();
+                System.out.print("메뉴선택: 1.관리자 로그인 2. 관리자 가입 3.홈으로");
+                sel = sc.nextInt();
+                if (sel == 1){
+                    System.out.println("관리자 로그인 메뉴");
+                    System.out.println("아이디 입력>>");
+                    String id = sc.next().toLowerCase();
 
-                System.out.print("비밀번호>> ");
-                String passwd = sc.next().toLowerCase();
+                    System.out.println("비번 입력>>");
+                    String pw = sc.next().toLowerCase();
 
-                User user = loginSVC.login(id, passwd);
+                    User user = loginSVC.login(id,pw);
+                    if (user == null){
+
+                    }
+
+                }
+
+
+
+
                 if (user == null) {
                     System.out.println("아이디나 비밀번호가 일치하지 않습니다.");
                     System.out.println("다시 입력은 1번, 회원가입은 2번, 취소는 3번, 프로그램 종료는 4번을 눌러주세요.");
-                    int sel = sc.nextInt();
+
                     if (sel == 1) {
                         selNum = 1;
-                    } else if (sel == 2) {
-                        selNum = 2;
-                    } else if (sel == 3) {
+                    }else{
                         selNum = 0;
-                    } else {
-                        selNum = 4;
                     }
 
                 } else {

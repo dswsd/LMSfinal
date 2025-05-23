@@ -1,6 +1,6 @@
 package manager;
 
-import dbc6.User;
+import manager.User;
 
 import java.sql.*;
 
