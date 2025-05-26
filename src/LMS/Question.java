@@ -12,6 +12,7 @@ public class Question {
         this.emun = emun;
         this.ejimun = ejimun;
         this.esamp = esamp;
+        this.eans = eans;
     }
 
     public int getEno() { return eno; }

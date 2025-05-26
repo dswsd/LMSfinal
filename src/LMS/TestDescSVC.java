@@ -14,15 +14,34 @@ public class TestDescSVC {
         }
     }
 
-    public int insertAnswer(int tno, int eno, String answer) {
+    public int getCorrectAnswer(int eno) {
+        connect();
+        int correct = -1;
+        String sql = "SELECT ans FROM answer WHERE eno = ?";
+
+        try (PreparedStatement ps = con.prepareStatement(sql)) {
+            ps.setInt(1, eno);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                correct = rs.getInt("ans");
+            }
+        } catch (SQLException e) {
+            System.err.println("정답 조회 오류");
+            e.printStackTrace();
+        }
+        return correct;
+    }
+
+
+    public int insertAnswer(int tno, int eno, int dab) {
         connect();
         int result = 0;
-        String sql = "INSERT INTO testdesc (tno, eno, answer) VALUES (?, ?, ?)";
+        String sql = "INSERT INTO testdesc (tno, eno, dab) VALUES (?, ?, ?)";
 
         try (PreparedStatement ps = con.prepareStatement(sql)) {
             ps.setInt(1, tno);
             ps.setInt(2, eno);
-            ps.setString(3, answer);
+            ps.setInt(3, dab);
             result = ps.executeUpdate();
         } catch (SQLException e) {
             System.err.println("답안 저장 오류");
@@ -31,4 +50,5 @@ public class TestDescSVC {
 
         return result;
     }
+
 }

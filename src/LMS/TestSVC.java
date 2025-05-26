@@ -16,10 +16,11 @@ public class TestSVC {
         }
     }
 
+
     public List<Question> getQuestionsWithAnswer(int subno) {
         connect();
         List<Question> list = new ArrayList<>();
-        String sql = "SELECT eno, emun, ejimun, esamp, eans FROM exeinfo WHERE subno = ? LIMIT 5";
+        String sql = "SELECT eno, emun, ejimun, esamp FROM exeinfo WHERE subno = ? LIMIT 5";
 
         try (PreparedStatement ps = con.prepareStatement(sql)) {
             ps.setInt(1, subno);
@@ -31,7 +32,7 @@ public class TestSVC {
                         rs.getString("emun"),
                         rs.getString("ejimun"),
                         rs.getString("esamp"),
-                        rs.getString("eans") // 정답 포함
+                        null // 정답 컬럼이 없으므로 null로 설정
                 );
                 list.add(q);
             }

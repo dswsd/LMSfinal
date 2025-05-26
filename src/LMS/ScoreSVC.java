@@ -36,25 +36,49 @@ public class ScoreSVC {
         return false;
     }
 
+    public void updateScore(int tno, int score) {
+        connect();
+        String sql = "UPDATE testinfo SET total = ? WHERE tno = ?";
+
+        try (PreparedStatement ps = con.prepareStatement(sql)) {
+            ps.setInt(1, score);
+            ps.setInt(2, tno);
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            System.err.println("점수 업데이트 오류");
+            e.printStackTrace();
+        }
+    }
+
+
     // 시험 정보 저장 및 시험번호(tno) 반환
     public int createTestInfo(int sno, int subno, int total) {
         connect();
         int tno = 0;
-        String sql = "INSERT INTO testinfo (sno, subno, total) VALUES (?, ?, ?)";
+        try {
+            // 1. 현재 가장 큰 tno 값을 가져옴
+            String getMaxSql = "SELECT IFNULL(MAX(tno), 0) + 1 AS nextTno FROM testinfo";
+            Statement stmt = con.createStatement();
+            ResultSet rs = stmt.executeQuery(getMaxSql);
 
-        try (PreparedStatement ps = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
-            ps.setInt(1, sno);
-            ps.setInt(2, subno);
-            ps.setInt(3, total);
-
-            ps.executeUpdate();
-
-            ResultSet rs = ps.getGeneratedKeys();
             if (rs.next()) {
-                tno = rs.getInt(1);  // 자동 생성된 시험번호 반환
+                tno = rs.getInt("nextTno");
             }
 
             rs.close();
+            stmt.close();
+
+            // 2. 새 tno 값으로 insert
+            String insertSql = "INSERT INTO testinfo (tno, sno, subno, total) VALUES (?, ?, ?, ?)";
+            PreparedStatement ps = con.prepareStatement(insertSql);
+            ps.setInt(1, tno);
+            ps.setInt(2, sno);
+            ps.setInt(3, subno);
+            ps.setInt(4, total);
+
+            ps.executeUpdate();
+            ps.close();
+
         } catch (SQLException e) {
             System.err.println("시험 정보 저장 실패");
             e.printStackTrace();

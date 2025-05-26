@@ -6,6 +6,7 @@ import java.util.Scanner;
 public class StudentMenu {
     public static void showStudentMenu(Scanner scanner) {
         StudentSVC studentSVC = new StudentSVC();
+        StudentSU studentSU = new StudentSU();
 
         while (true) {
             System.out.println("[학생]메뉴선택: 1.로그인  2.회원가입  3.홈으로");
@@ -67,7 +68,15 @@ public class StudentMenu {
                                     Examq examq = new Examq();
                                     examq.takeExam(scanner, sno, subno);
                                 } else if (number == 2) {
-                                    System.out.println("[점수확인 기능은 추후 구현 예정입니다]");
+                                    System.out.print("확인할 년도 입력 (예: 2024) >>> ");
+                                    int subyear = scanner.nextInt();
+                                    scanner.nextLine();
+
+                                    System.out.print("학기 선택 (숫자 입력): 1. 1학기 2. 2학기 >>> ");
+                                    int subterm = scanner.nextInt();
+                                    scanner.nextLine();
+
+                                    studentSVC.checkScore(user.getSno(), subyear, subterm);
                                 } else if (number == 3) {
                                     return;
                                 } else {
@@ -76,16 +85,20 @@ public class StudentMenu {
                             }
                         }
                     } else if (num == 1) {
-                        System.out.println("회원가입 기능은 아직 구현되지 않았습니다.\n");
+                        studentSU.registerStudent(scanner); // 회원가입 로직 위임
+                        num = 0;
                     } else if (num == 3) break;
                     else if (num == 4) selNum = 3;
                 }
             } else if (selNum == 2) {
-                System.out.println("회원가입 기능은 아직 구현되지 않았습니다.\n");
+                studentSU.registerStudent(scanner);
             } else if (selNum == 3) {
                 break;
             } else {
                 System.out.println("1~3 사이의 숫자를 입력해주세요.\n");
+            }
+            if(selNum == 3){
+                return;
             }
         }
     }
