@@ -26,20 +26,21 @@ public class StudentSVC {
 
     //DB와 입력받은 id, pw 정보 confirm
     //없을 시 null값 보냄
-    public StudentUser login(String id, String pw) {
-        StudentUser suser = null;
+    public User login(String sid, String password) {
+        User user = null;
         Statement stmt = null;
         ResultSet rs = null;
         try {
             connect();
             stmt = con.createStatement();
-            String sql = "SELECT * FROM student WHERE sid = '" + id
-                    + "' AND " + "spw = '" + pw + "'";
+            String sql = "SELECT * FROM student WHERE sid = '" + sid
+                    + "' AND " + "spw = '" + password + "'";
             rs = stmt.executeQuery(sql);
             if (rs.next()) {
                 String sno = rs.getString("sno");
                 String snm = rs.getString("snm");
-                suser = new StudentUser();
+                user = new User(sno, snm);
+                System.out.println(sno + snm);
             }
         } catch (SQLException se) {
             System.err.println("sql 데이터 조회 오류");
@@ -53,7 +54,7 @@ public class StudentSVC {
                 System.err.println("DB가 정상적으로 종료되지 않음");;
             }
         }
-        return suser;//
+        return user;//
     }
 
     //회원가입 메뉴 (insert)

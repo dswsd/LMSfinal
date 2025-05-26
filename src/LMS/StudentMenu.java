@@ -30,8 +30,8 @@ public class StudentMenu {
 
                         System.out.print("비번 입력>>");
                         String pw = scanner.next().toLowerCase();
-                        StudentUser suser = studentSVC.login(id, pw);
-                        if (suser == null) {
+                        User user = studentSVC.login(id, pw);
+                        if (user == null) {
                             System.out.println("등록된 정보가 없거나 일치하지 않습니다.");
                             while (true) {
                                 int sel;
