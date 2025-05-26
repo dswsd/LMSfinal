@@ -117,12 +117,13 @@ public class ManagerMenu {
                     stateSVC = new StateSVC();
                     System.out.println("상태 변경 메뉴");
                     System.out.print("변경할 아이디 입력 >> ");
-                    String targetIdForState = scanner.nextLine();
+                    String Statea = scanner.nextLine();
 
-                    if (!user.getRole().equalsIgnoreCase("SUPER")) {
+                    if (!user.getRole().toUpperCase().equals("SUPER")) {
                         System.out.println("권한이 없습니다. SUPER 관리자만 상태 변경이 가능합니다.");
                         break;
                     }
+
 
                     System.out.print("변경할 상태 입력 (0.사용불가 또는 대기  1.사용가능) >> ");
                     String stateInput = scanner.nextLine();
@@ -137,7 +138,7 @@ public class ManagerMenu {
                         break;
                     }
 
-                    int stateChangeResult = stateSVC.updateState(targetIdForState, newState);
+                    int stateChangeResult = stateSVC.updateState(Statea, newState);
                     if (stateChangeResult > 0) {
                         System.out.println("상태변경됨");
                     } else {
@@ -152,10 +153,11 @@ public class ManagerMenu {
                     String targetId = scanner.nextLine();
 
 
-                    if (!user.getRole().equalsIgnoreCase("SUPER")) {
+                    if (!user.getRole().toUpperCase().equals("SUPER")) {
                         System.out.println("권한이 없습니다. SUPER 관리자만 역할 변경이 가능합니다.");
                         break;
                     }
+
 
                     System.out.print("변경할 역할 입력 (1.SUPER  2.SUB) >> ");
                     String roleInput = scanner.nextLine();
