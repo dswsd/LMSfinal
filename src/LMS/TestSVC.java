@@ -16,23 +16,32 @@ public class TestSVC {
         }
     }
 
-    public List<Question> getQuestions() {
+    public List<Question> getQuestionsWithAnswer(int subno) {
         connect();
         List<Question> list = new ArrayList<>();
-        String sql = "SELECT ENO, EMUN, EJIMUN, ESAMP FROM exeinfo LIMIT 5"; // ← 여기 바뀐 부분
+        String sql = "SELECT eno, emun, ejimun, esamp, eans FROM exeinfo WHERE subno = ? LIMIT 5";
 
-        try (Statement stmt = con.createStatement(); ResultSet rs = stmt.executeQuery(sql)) {
+        try (PreparedStatement ps = con.prepareStatement(sql)) {
+            ps.setInt(1, subno);
+            ResultSet rs = ps.executeQuery();
+
             while (rs.next()) {
-                int eno = rs.getInt("ENO");
-                String emun = rs.getString("EMUN");
-                String ejimun = rs.getString("EJIMUN");
-                String esamp = rs.getString("ESAMP");
-
-                list.add(new Question(eno, emun, ejimun, esamp));
+                Question q = new Question(
+                        rs.getInt("eno"),
+                        rs.getString("emun"),
+                        rs.getString("ejimun"),
+                        rs.getString("esamp"),
+                        rs.getString("eans") // 정답 포함
+                );
+                list.add(q);
             }
+
+            rs.close();
         } catch (SQLException e) {
             e.printStackTrace();
         }
+
         return list;
     }
 }
+
