@@ -1,5 +1,6 @@
 package LMS;
 
+import java.util.List;
 import java.util.Scanner;
 
 public class StudentMenu {
@@ -59,6 +60,35 @@ public class StudentMenu {
                                 }
 
                             }
+                            //학생 로그인 메뉴
+                        } else {
+                            System.out.println(user.getSnm() + "님 환영합니다.");
+                            while (true) {
+                                System.out.println("학생 메뉴 선택: 1.시험응시 2.점수확인  3.로그아웃");
+                                int number;
+                                if (!scanner.hasNextInt()) {
+                                    System.out.println("1~4 사이의 숫자를 입력해주세요.\n");
+                                    scanner.nextLine(); // 잘못된 입력 버림
+                                    continue;
+                                }
+                                number = scanner.nextInt();
+                                scanner.nextLine();
+                                //시험응시
+                                if (number == 1) {
+                                    Examq examq = new Examq();
+                                    examq.takeExam(scanner);
+
+                                    //점수확인
+                                } else if (number == 2) {
+                                    //로그아웃
+                                } else if (number == 3) {
+                                    return;
+                                } else {
+
+                                }
+
+                            }
+
 
                         }
                         //회원가입 메뉴 구현 예정
@@ -88,5 +118,8 @@ public class StudentMenu {
 
 
     }
+
+
+
 
 }

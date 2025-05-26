@@ -6,7 +6,7 @@ public class User {
     private String name;
     private String role;
     private int state;
-    private String sno;
+    private int sno;
     private String snm;
     private String sid;
     private String spw;
@@ -20,7 +20,7 @@ public class User {
         this.state = state;
     }
 
-    public User(String sno, String snm) {
+    public User(int sno, String snm) {
         this.sno = sno;
         this.snm = snm;
         this.sid = sid;
@@ -50,7 +50,7 @@ public class User {
         return state;
     }
 
-    public String getSno() {
+    public int getSno() {
         return sno;
     }
 
@@ -71,7 +71,7 @@ public class User {
     }
 
     // Setter
-    public void setSno(String sno) {
+    public void setSno(int sno) {
         this.sno = sno;
     }
 

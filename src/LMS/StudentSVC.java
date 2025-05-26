@@ -37,7 +37,7 @@ public class StudentSVC {
                     + "' AND " + "spw = '" + password + "'";
             rs = stmt.executeQuery(sql);
             if (rs.next()) {
-                String sno = rs.getString("sno");
+                int sno = rs.getInt("sno");
                 String snm = rs.getString("snm");
                 user = new User(sno, snm);
                 System.out.println(sno + snm);
@@ -68,22 +68,6 @@ public class StudentSVC {
             ps.setString(1, id);
             ps.setString(2, passwd);
             ps.setString(3, name);
-            cnt = ps.executeUpdate();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return cnt;
-    }
-
-    //회원탈퇴 (delete)
-    public int deleteMember(String id) {
-        connect();
-        PreparedStatement ps = null;
-        String sql = "delete from member where mid= ?";
-        int cnt = 0;
-        try {
-            ps = con.prepareStatement(sql);
-            ps.setString(1, id);
             cnt = ps.executeUpdate();
         } catch (Exception e) {
             e.printStackTrace();
